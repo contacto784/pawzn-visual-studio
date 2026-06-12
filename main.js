@@ -68,19 +68,42 @@ document.querySelectorAll('.faq__question').forEach(btn => {
    CONTACT FORM
 =========================== */
 const form = document.getElementById('contactForm');
+const feedback = document.getElementById('contactFeedback');
 if (form) {
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const btn = form.querySelector('button[type="submit"]');
-    btn.textContent = 'Mensaje enviado ✓';
-    btn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+    const formData = new FormData(form);
+    const body = new URLSearchParams(formData);
+
+    feedback.textContent = '';
+    feedback.classList.remove('error');
+    btn.textContent = 'Enviando...';
     btn.disabled = true;
-    setTimeout(() => {
-      btn.textContent = 'Enviar mensaje';
-      btn.style.background = '';
-      btn.disabled = false;
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body
+      });
+
+      if (!response.ok) {
+        throw new Error('No se pudo enviar el formulario.');
+      }
+
+      feedback.textContent = 'Mensaje enviado. Gracias, te respondo en menos de 24 horas.';
       form.reset();
-    }, 3500);
+    } catch (error) {
+      feedback.textContent = 'Hubo un error al enviar. Prueba de nuevo o escríbeme directamente a contacto@pawzn.com.';
+      feedback.classList.add('error');
+    } finally {
+      btn.textContent = 'Enviar mensaje';
+      btn.disabled = false;
+    }
   });
 }
 
