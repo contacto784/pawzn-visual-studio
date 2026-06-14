@@ -1,0 +1,25 @@
+{
+  "name": "Agente Pick Pro",
+  "short_name": "Pick Pro",
+  "description": "Analizador de picks deportivos con EV, Kelly y simulador",
+  "start_url": "./agente-pick-pro.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#05040a",
+  "theme_color": "#f5c842",
+  "categories": ["sports", "utilities"],
+  "icons": [
+    {
+      "src": "./favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
